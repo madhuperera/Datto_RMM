@@ -1,3 +1,6 @@
+# Author : Madhu Perera
+# Summary: Monitoring to see if there are user accounts in Local Administrators group
+
 # PLEASE CHANGE UDF VARIABLE
 [String] $UDF_ToUpdate = "CHANGEME"  # Example: "custom28"
 
