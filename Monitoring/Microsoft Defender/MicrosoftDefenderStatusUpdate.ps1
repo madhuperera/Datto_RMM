@@ -4,6 +4,8 @@
 # ------------------------------- START -------------------------------
 
 [String] $UDF_ToUpdate = "Custom2"
+[bool] $ExitWithError = $true
+[bool] $ExitWithNoError = $false
 
 
 $DefenderStatus = Get-MpComputerStatus
@@ -103,12 +105,7 @@ if ($AllProtectionsOn)
     " --- " + "$RealTimeProtectionEnabled | Antivirus Realtime Scanning Status"
     
 
-    #Write-Host $Output
-    New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_ToUpdate -PropertyType String -Value "Running" -Force
-    write-host '<-Start Result->'
- 	write-host "STATUS=All Good $Output"
- 	write-host '<-End Result->'
- 	exit 0
+    Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithNoError -Results $Output -Registry_Value "Running"
 }
 else
 {
@@ -125,12 +122,5 @@ else
     " --- " + "$OnAccessProtectionEnabled | Antivirus Access Protection Status" + `
     " --- " + "$RealTimeProtectionEnabled | Antivirus Realtime Scanning Status"
 
-    #Write-Host $Output
-
-    New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_ToUpdate -PropertyType String -Value "Error" -Force
-
-    write-host '<-Start Result->'
- 	write-host "STATUS=Error $Output"
- 	write-host '<-End Result->'
- 	exit 1
+    Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithError -Results $Output -Registry_Value "Error"
 }
