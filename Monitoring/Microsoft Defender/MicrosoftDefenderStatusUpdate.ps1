@@ -3,12 +3,14 @@
 
 # ------------------------------- START -------------------------------
 
-[String] $UDF_ToUpdate = "Custom2"
+# PLEASE CHANGE UDF VARIABLE
+[String] $UDF_ToUpdate = "CHANGEME"  # Example: "custom2"
+
+# ______________________________________________________________
+
 [bool] $ExitWithError = $true
 [bool] $ExitWithNoError = $false
 
-
-$DefenderStatus = Get-MpComputerStatus
 
 function Update-OutputOnExit
 {
@@ -57,6 +59,8 @@ function Get-ServiceStatus
 
     return $ServiceStatus
 }
+
+$DefenderStatus = Get-MpComputerStatus
 
 $DefenderFirewallServiceStatus = Get-ServiceStatus -ServiceName "mpssvc"
 $DefenderATPServiceStatus = Get-ServiceStatus -ServiceName "Sense"
