@@ -1,14 +1,33 @@
 # Author : Madhu Perera
-# Version : 1.0.0
 # Summary: Monitoring to see if all Defender Services and features are enabled and running
 
 # ------------------------------- START -------------------------------
 
-[String] $UFDToUpdate = "Custom2"
+[String] $UDF_ToUpdate = "Custom2"
 
 
 $DefenderStatus = Get-MpComputerStatus
 
+function Update-OutputOnExit
+{
+    param
+    (
+        [String] $UDF_Value,
+        [bool] $ExitCode,
+        [String] $Results,
+        [String] $Registry_Value
+    )
+
+    if ($UDF_Value)
+    {
+        New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_Value -PropertyType String -Value $Registry_Value -Force
+    }
+        
+    write-host '<-Start Result->' -ErrorAction SilentlyContinue
+    write-host "STATUS=$Results" -ErrorAction SilentlyContinue
+    write-host '<-End Result->' -ErrorAction SilentlyContinue
+    exit $ExitCode
+}
 
 function Get-ServiceStatus
 {
@@ -85,7 +104,7 @@ if ($AllProtectionsOn)
     
 
     #Write-Host $Output
-    REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\CentraStage /v $UFDToUpdate /t REG_SZ /d "Running" /f
+    New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_ToUpdate -PropertyType String -Value "Running" -Force
     write-host '<-Start Result->'
  	write-host "STATUS=All Good $Output"
  	write-host '<-End Result->'
@@ -108,7 +127,7 @@ else
 
     #Write-Host $Output
 
-    REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\CentraStage /v $UFDToUpdate /t REG_SZ /d "Error" /f
+    New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_ToUpdate -PropertyType String -Value "Error" -Force
 
     write-host '<-Start Result->'
  	write-host "STATUS=Error $Output"
