@@ -1,5 +1,4 @@
-# _______________ PLEASE CHANGE UDF VARIABLE __________________
-
+# PLEASE CHANGE UDF VARIABLE
 [String] $UDF_ToUpdate = "CHANGEME"  # Example: "custom28"
 
 # ______________________________________________________________
@@ -46,25 +45,15 @@ If (!$BuiltInAdminEnabled)
 if ($LocalAdministrators.Count -eq 0)
 {
     $Output = "Excellent! No Local Administrator Accounts Found."
-    # PLEASE UPDATE UDF NUMBER BELOW
-    REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\CentraStage /v Custom28 /t REG_SZ /d "Great | No Admins" /f
-    write-host '<-Start Result->'
-    write-host "STATUS=All Good $Output"
-    write-host '<-End Result->'
-    exit 0
+    Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithNoError -Results $Output -Registry_Value "Great | No Admins"
 }
 else
 {
-    
+    $Output = "WARNING! These Accounts found: "
     foreach ($Account in $LocalAdministrators)
     {
-        $Output = $Output + $Account + " | "
+        $Output = $Output, $Account -join " | "
     }
 
-    # PLEASE UPDATE UDF NUMBER BELOW
-    REG ADD HKEY_LOCAL_MACHINE\SOFTWARE\CentraStage /v Custom28 /t REG_SZ /d "Warning | Admins Found" /f
-    write-host '<-Start Result->'
- 	write-host "STATUS=Warning $Output"
- 	write-host '<-End Result->'
- 	exit 1
+    Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithError -Results $Output -Registry_Value "Warning | Admins Found"
 }
