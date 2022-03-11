@@ -10,6 +10,16 @@
 [bool] $ExitWithError = $true
 [bool] $ExitWithNoError = $false
 
+function Get-DeviceDetails
+{
+	
+	$Date_String = Get-Date -Format "dddd dd/MM/yyyy HH:mm:ss"
+	$ComputerName = $ENV:COMPUTERNAME
+	
+	$DeviceDetails = "Script running on the Computer: $ComputerName on $Date_String`n`n"
+	return $DeviceDetails
+
+}
 
 function Update-OutputOnExit
 {
@@ -40,6 +50,8 @@ $LocalAdministrators.Remove($LocalAdministrators[$LocalAdministrators.Count - 1]
 $BuiltInAdminName = (Get-LocalUser | Where-Object {$_.Description -like "Built-in account for administering*"}).Name
 $BuiltInAdminEnabled = (Get-LocalUser | Where-Object {$_.Description -like "Built-in account for administering*"}).Enabled
 
+$Output = Get-DeviceDetails
+
 If (!$BuiltInAdminEnabled)
 {
     $LocalAdministrators.Remove($BuiltInAdminName)
@@ -47,12 +59,12 @@ If (!$BuiltInAdminEnabled)
 
 if ($LocalAdministrators.Count -eq 0)
 {
-    $Output = "Excellent! No Local Administrator Accounts Found."
+    $Output += "Excellent! No Local Administrator Accounts Found."
     Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithNoError -Results $Output -Registry_Value "Great | No Admins"
 }
 else
 {
-    $Output = "WARNING! These Accounts found: "
+    $Output += "WARNING! These Accounts found: "
     foreach ($Account in $LocalAdministrators)
     {
         $Output = $Output, $Account -join " | "
