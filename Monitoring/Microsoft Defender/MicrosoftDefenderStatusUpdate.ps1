@@ -91,36 +91,36 @@ if ($AMServiceEnabled -and $AntispywareEnabled -and $AntivirusEnabled `
 
 if ($AllProtectionsOn)
 {
-    $Output = "All Defender Services are running." + "----" + "$DefenderFirewallServiceStatus | Windows Defender Firewall" + " --- " + "$DefenderATPServiceStatus | Windows Defender Advanced Threat Protection Service" + `
-    " --- " + "$DefenderNetInspectionServiceStatus | Microsoft Defender Antivirus Network Inspection Service" + `
-    " --- " + "$DefenderAVServiceStatus | Microsoft Defender Antivirus Service" + `
-    " --- " + "$AMServiceEnabled | Activation of the antimalware service" + `
-    " --- " + "$AntispywareEnabled | Antispyware protection activation status" + `
-    " --- " + "$AntivirusEnabled | Antivirus protection activation status" + `
-    " --- " + "$BehaviorMonitorEnabled | Antivirus behavior monitor status" + `
-    " --- " + "$IoavProtectionEnabled | Office Antivirus protection status" + `
-    " --- " + "$IsTamperProtected | Antivirus Tamper Protection Status" + `
-    " --- " + "$NISEnabled | Antivirus Network Protection (Web Filtering)" + `
-    " --- " + "$OnAccessProtectionEnabled | Antivirus Access Protection Status" + `
-    " --- " + "$RealTimeProtectionEnabled | Antivirus Realtime Scanning Status"
+    $Output = "All Defender Services are running." + "----" + "`n`n$DefenderFirewallServiceStatus | Windows Defender Firewall" + " --- " + "`n$DefenderATPServiceStatus | Windows Defender Advanced Threat Protection Service" + `
+    " --- " + "`n$DefenderNetInspectionServiceStatus | Microsoft Defender Antivirus Network Inspection Service" + `
+    " --- " + "`n$DefenderAVServiceStatus | Microsoft Defender Antivirus Service" + `
+    " --- " + "`n`n$AMServiceEnabled | Activation of the antimalware service" + `
+    " --- " + "`n$AntispywareEnabled | Antispyware protection activation status" + `
+    " --- " + "`n$AntivirusEnabled | Antivirus protection activation status" + `
+    " --- " + "`n$BehaviorMonitorEnabled | Antivirus behavior monitor status" + `
+    " --- " + "`n$IoavProtectionEnabled | Office Antivirus protection status" + `
+    " --- " + "`n$IsTamperProtected | Antivirus Tamper Protection Status" + `
+    " --- " + "`n$NISEnabled | Antivirus Network Protection (Web Filtering)" + `
+    " --- " + "`n$OnAccessProtectionEnabled | Antivirus Access Protection Status" + `
+    " --- " + "`n$RealTimeProtectionEnabled | Antivirus Realtime Scanning Status"
     
 
     Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithNoError -Results $Output -Registry_Value "Running"
 }
 else
 {
-    $Output = "Some or all Defender Services are NOT running!" + "----" + "$DefenderFirewallServiceStatus | Windows Defender Firewall" + " --- " + "$DefenderATPServiceStatus | Windows Defender Advanced Threat Protection Service" + `
-    " --- " + "$DefenderNetInspectionServiceStatus | Microsoft Defender Antivirus Network Inspection Service" + `
-    " --- " + "$DefenderAVServiceStatus | Microsoft Defender Antivirus Service" + `
-    " --- " + "$AMServiceEnabled | Activation of the antimalware service" + `
-    " --- " + "$AntispywareEnabled | Antispyware protection activation status" + `
-    " --- " + "$AntivirusEnabled | Antivirus protection activation status" + `
-    " --- " + "$BehaviorMonitorEnabled | Antivirus behavior monitor status" + `
-    " --- " + "$IoavProtectionEnabled | Office Antivirus protection status" + `
-    " --- " + "$IsTamperProtected | Antivirus Tamper Protection Status" + `
-    " --- " + "$NISEnabled | Antivirus Network Protection (Web Filtering)" + `
-    " --- " + "$OnAccessProtectionEnabled | Antivirus Access Protection Status" + `
-    " --- " + "$RealTimeProtectionEnabled | Antivirus Realtime Scanning Status"
+    $Output = "Some or all Defender Services are NOT running!" + "----" + "`n`n$DefenderFirewallServiceStatus | Windows Defender Firewall" + " --- " + "`n$DefenderATPServiceStatus | Windows Defender Advanced Threat Protection Service" + `
+    " --- " + "`n$DefenderNetInspectionServiceStatus | Microsoft Defender Antivirus Network Inspection Service" + `
+    " --- " + "`n$DefenderAVServiceStatus | Microsoft Defender Antivirus Service" + `
+    " --- " + "`n`n$AMServiceEnabled | Activation of the antimalware service" + `
+    " --- " + "`n$AntispywareEnabled | Antispyware protection activation status" + `
+    " --- " + "`n$AntivirusEnabled | Antivirus protection activation status" + `
+    " --- " + "`n$BehaviorMonitorEnabled | Antivirus behavior monitor status" + `
+    " --- " + "`n$IoavProtectionEnabled | Office Antivirus protection status" + `
+    " --- " + "`n$IsTamperProtected | Antivirus Tamper Protection Status" + `
+    " --- " + "`n$NISEnabled | Antivirus Network Protection (Web Filtering)" + `
+    " --- " + "`n$OnAccessProtectionEnabled | Antivirus Access Protection Status" + `
+    " --- " + "`n$RealTimeProtectionEnabled | Antivirus Realtime Scanning Status"
 
     Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithError -Results $Output -Registry_Value "Error"
 }
