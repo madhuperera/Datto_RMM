@@ -11,6 +11,16 @@
 [bool] $ExitWithError = $true
 [bool] $ExitWithNoError = $false
 
+function Get-DeviceDetails
+{
+	
+	$Date_String = Get-Date -Format "dddd dd/MM/yyyy HH:mm:ss"
+	$ComputerName = $ENV:COMPUTERNAME
+	
+	$DeviceDetails = "Script running on the Computer: $ComputerName on $Date_String`n`n"
+	return $DeviceDetails
+
+}
 
 function Update-OutputOnExit
 {
@@ -60,6 +70,7 @@ function Get-ServiceStatus
     return $ServiceStatus
 }
 
+Get-DeviceDetails
 $DefenderStatus = Get-MpComputerStatus
 
 $DefenderFirewallServiceStatus = Get-ServiceStatus -ServiceName "mpssvc"
