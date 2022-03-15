@@ -33,7 +33,7 @@ function Update-OutputOnExit
 
     if ($UDF_Value)
     {
-        New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_Value -PropertyType String -Value $Registry_Value -Force
+        New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_Value -PropertyType String -Value $Registry_Value -Force | Out-Null
     }
         
     write-host '<-Start Result->' -ErrorAction SilentlyContinue
