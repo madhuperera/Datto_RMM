@@ -134,3 +134,9 @@ if ($WebrootManagedSite)
     }
 
 }
+else
+{
+    $Output = "Datto Site is not configured to be a Webroot Site"
+    $UDFMessage = "Site Not Configured"
+    Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithNoError -Results $Output -Registry_Value $UDFMessage
+}
