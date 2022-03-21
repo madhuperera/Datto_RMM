@@ -74,7 +74,7 @@ Get-DeviceDetails
 
 # Checking to see if DNS Proxy Server is running
 [bool] $WebrootDNSProcess = $false
-[String] $DNSProxyServiceStatus = Get-ServiceStatus -ServiceName "DNSProxyCache"
+[String] $DNSProxyServiceStatus = Get-ServiceStatus -ServiceName "DNSProxyAgent"
 if ($DNSProxyServiceStatus -eq "Running")
 {
     if ((Get-Process DnsProxySvr -ErrorAction SilentlyContinue).Description -eq "Webroot DNS Protection Agent")
