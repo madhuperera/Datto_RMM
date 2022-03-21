@@ -112,29 +112,25 @@ if ($WebrootManagedSite)
     {
         $Output = "Webroot DNS is Fully Configured and Running."
         $UDFMessage = "Enabled and Running"
-        $ExitWithError = $false
-        Update-OutputOnExit -UFDValue $UDFMessage -ExitCode $ExitWithError -Results $Output
+        Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithNoError -Results $Output -Registry_Value $UDFMessage
     }
         elseif (!$WebrootDNSLocalHostEnabled -and $WebrootDNSProcess)
         {
             $Output = "Webroot DNS Process is running but not being used for DNS queries. No Loopsback DNS!"
             $UDFMessage = "Running"
-            $ExitWithError = $true
-            Update-OutputOnExit -UFDValue $UDFMessage -ExitCode $ExitWithError -Results $Output
+            Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithError -Results $Output -Registry_Value $UDFMessage
         }
             elseif ($WebrootDNSLocalHostEnabled -and !$WebrootDNSProcess)
             {
                 $Output = "Webroot DNS Loopback is found but no process is running. Misconfiguration detected."
                 $UDFMessage = "Enabled"
-                $ExitWithError = $true
-                Update-OutputOnExit -UFDValue $UDFMessage -ExitCode $ExitWithError -Results $Output
+                Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithError -Results $Output -Registry_Value $UDFMessage
             }
     else
     {
         $Output = "Webroot DNS is missing!"
         $UDFMessage = "Error"
-        $ExitWithError = $true
-        Update-OutputOnExit -UFDValue $UDFMessage -ExitCode $ExitWithError -Results $Output
+        Update-OutputOnExit -UDF_Value $UDF_ToUpdate -ExitCode $ExitWithError -Results $Output -Registry_Value $UDFMessage
     }
 
 }
