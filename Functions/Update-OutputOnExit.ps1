@@ -8,7 +8,7 @@ function Update-OutputOnExit
         [String] $Registry_Value
     )
 
-    if ($UDF_Value)
+    if ($UDF_Value -and $Registry_Value)
     {
         New-ItemProperty -Path HKLM:\SOFTWARE\CentraStage\ -Name $UDF_Value -PropertyType String -Value $Registry_Value -Force
     }
