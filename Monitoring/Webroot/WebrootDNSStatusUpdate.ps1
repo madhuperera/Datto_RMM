@@ -87,13 +87,29 @@ if ($DNSProxyServiceStatus -eq "Running")
 
 # Checking to see if Local DNS is pointing to Loopback Address
 [bool] $WebrootDNSLocalHostEnabled = $false
-$AllAdapters = Get-DnsClientServerAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue
-
-foreach ($Adapter in $AllAdapters)
+function Test-LoopbackAddress
 {
-    if ($Adapter.ServerAddresses -contains "127.0.0.1")
+    [bool] $LoopbackAddressStatus = $false
+    $AllAdapters = Get-DnsClientServerAddress -AddressFamily IPv4 -ErrorAction SilentlyContinue
+    foreach ($Adapter in $AllAdapters)
     {
-        $WebrootDNSLocalHostEnabled = $true
+        if ($Adapter.ServerAddresses -contains "127.0.0.1")
+        {
+            $LoopbackAddressStatus = $true
+        }
+    }
+
+    return $LoopbackAddressStatus
+}
+$WebrootDNSLocalHostEnabled = Test-LoopbackAddress
+if (!$WebrootDNSLocalHostEnabled)
+{
+    Write-Warning "No Loopback address found"
+    if ($WebrootDNSProcess)
+    {
+        Write-Information "Attempting to restart DNS Proxy Agent Service"
+        Restart-Service -Name "DNSProxyAgent"
+        $WebrootDNSLocalHostEnabled = Test-LoopbackAddress
     }
 }
 
