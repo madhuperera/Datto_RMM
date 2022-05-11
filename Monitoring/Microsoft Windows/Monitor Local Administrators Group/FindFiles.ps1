@@ -18,7 +18,7 @@ function Get-DeviceDetails
 	$Date_String = Get-Date -Format "dddd dd/MM/yyyy HH:mm:ss"
 	$ComputerName = $ENV:COMPUTERNAME
 	
-	$DeviceDetails = "Script running on the Computer: $ComputerName on $Date_String`n`n"
+	$DeviceDetails = "`nScript running on the Computer: $ComputerName on $Date_String`n`n"
 	return $DeviceDetails
 
 }
@@ -49,7 +49,8 @@ Get-DeviceDetails
 $AllItems = Get-ChildItem -Path $FolderPath -Recurse -Include $SearchString -ErrorAction SilentlyContinue
 if ($AllItems)
 {
-    $AllItems
+    $AllItems | Select-Object @{n="File_Path";e={$_.FullName}}, LastAccessTime | Sort-Object File_Path | `
+        Format-Table -Wrap -AutoSize
     Update-OutputOnExit -ExitCode $ExitWithError -Results "Files Found"
 }
 else
