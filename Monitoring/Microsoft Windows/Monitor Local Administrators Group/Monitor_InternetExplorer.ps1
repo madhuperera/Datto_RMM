@@ -62,11 +62,11 @@ try
     }
     else
     {
-        Update-OutputOnExit -ExitCode $ExitWithError -Results "Excellent! IE Is NOT installed."
+        Update-OutputOnExit -ExitCode $ExitWithNoError -Results "Excellent! IE Is NOT installed."
     } 
 }
 catch
 {
-    Update-OutputOnExit -ExitCode $ExitWithNoError -Results "Command was not successful on the device."
+    Update-OutputOnExit -ExitCode $ExitWithError -Results "Command was not successful on the device."
 }
 
