@@ -2,7 +2,8 @@
 # Summary: Simple script to check if Internet Explorer is enabled
 
 # ------------------------------- START -------------------------------
-
+# PLEASE CHANGE UDF VARIABLE
+[String] $UDF_ToUpdate = "custom4"  # Example: "custom28"
 # ______________________________________________________________
 
 [bool] $ExitWithError = $true
@@ -49,24 +50,24 @@ try
     {
         if ($IEStatus.State -eq "Enabled")
         {
-            Update-OutputOnExit -ExitCode $ExitWithError -Results "Oh No! IE is Installed and Enabled!"
+            Update-OutputOnExit -ExitCode $ExitWithError -Results "Oh No! IE is Installed and Enabled!" -UDF_Value $UDF_ToUpdate -Registry_Value "Enabled"
         }
         elseif ($IEStatus.State -eq "Disabled")
         {
-            Update-OutputOnExit -ExitCode $ExitWithNoError -Results "Not Bad! IE is Installed but Disabled!"
+            Update-OutputOnExit -ExitCode $ExitWithNoError -Results "Not Bad! IE is Installed but Disabled!" -UDF_Value $UDF_ToUpdate -Registry_Value "Disabled"
         }
         else
         {
-            Update-OutputOnExit -ExitCode $ExitWithError -Results "$($IEStatus.State) : Not supported!"
+            Update-OutputOnExit -ExitCode $ExitWithError -Results "$($IEStatus.State) : Not supported!" -UDF_Value $UDF_ToUpdate -Registry_Value "Unsupported_State"
         }
     }
     else
     {
-        Update-OutputOnExit -ExitCode $ExitWithNoError -Results "Excellent! IE Is NOT installed."
+        Update-OutputOnExit -ExitCode $ExitWithNoError -Results "Excellent! IE Is NOT installed." -UDF_Value $UDF_ToUpdate -Registry_Value "Removed"
     } 
 }
 catch
 {
-    Update-OutputOnExit -ExitCode $ExitWithError -Results "Command was not successful on the device."
+    Update-OutputOnExit -ExitCode $ExitWithError -Results "Command was not successful on the device." -UDF_Value $UDF_ToUpdate -Registry_Value "Script_Error"
 }
 
