@@ -9,8 +9,10 @@
 # ------------ DATTO VARIABLES ----------------
 [String] $PrinterPortIPAddress = $ENV:DRMM_PrinterPortIPAddress
 [String] $PrinterPortName = $ENV:DRMM_PrinterPortName
-[String] $SubfolderToCopy = $ENV:DRMM_SubfolderToCopy
-[String] $DestinationToCopy = $ENV:DRMM_DestinationToCopy
+[String] $PrinterName = $ENV:DRMM_PrinterName
+[String] $PrinterDriverModelName = $ENV:DRMM_PrinterDriverModelName
+[String] $PrinterDriverZipFileName = $ENV:DRMM_PrinterDriverZipFileName
+[String] $PrinterDriverModelFileName = $ENV:DRMM_PrinterDriverModelFileName
 
 function Get-DeviceDetails
 {
@@ -49,8 +51,11 @@ Get-DeviceDetails
 function Test-PrinterPortExists
 {
     # IP Address of the Printer
-    [Parameter(Mandatory)]
-    [String] $PrinterPortName
+    param
+    (
+        [String] $PrinterPortName
+    )
+    
 
     if (Get-PrinterPort | Where-Object {$_.Name -like "*$($PrinterPortName)*"})
     {
@@ -58,27 +63,50 @@ function Test-PrinterPortExists
     }
     else
     {
-        retrun $false
+        return $false
     }
 }
 
 function Test-PrinterExists
 {
     # IP Address of the Printer
-    [Parameter(Mandatory)]
-    [String] $PrinterName
+    param
+    (
+        [String] $PrinterName
+    )    
 
-    if (Get-Printer $($PrinterName))
+    if (Get-Printer -Name $PrinterName)
     {
         return $true
     }
     else
     {
-        retrun $false
+        return $false
     }
 }
 
-if (!(Test-PrinterPortExists))
+# Installing the Driver
+Expand-Archive -Path "$PSScriptRoot\$PrinterDriverZipFileName" -DestinationPath "$PSScriptRoot\" -Force
+If (Test-Path -Path "$PSScriptRoot\Driver")
+{
+    try
+    {
+        cscript "C:\Windows\System32\Printing_Admin_Scripts\en-US\prndrvr.vbs" -a -m $PrinterDriverModelName -i "$PSScriptRoot\Driver\$PrinterDriverModelFileName" -h "$PSScriptRoot\Driver" -v 3
+    }
+    catch
+    {
+        Update-OutputOnExit -ExitCode $ExitWithError -Results "Error adding $PrinterDriverModelName to Windows"
+    }
+    
+}
+else
+{
+    Update-OutputOnExit -ExitCode $ExitWithError -Results "Error Extracting Printer Drivers"
+}
+
+
+# Installing the Printer Port
+if (!(Test-PrinterPortExists -PrinterPortName $PrinterPortName))
 {
     try
     {
@@ -91,21 +119,22 @@ if (!(Test-PrinterPortExists))
 }
 else
 {
-    write-host "$PrinterPortName is aleady exists in the system!"
+    write-host "$PrinterPortName aleady exists in the system!"
 }
 
-if (!(Test-PrinterExists))
+# Installing the Printer
+if (!(Test-PrinterExists -PrinterName $PrinterName))
 {
     try
     {
-        Add-PrinterPort -Name $PrinterPortName -PrinterHostAddress $PrinterPortIPAddress -PortNumber 9100
+        Add-Printer -Name $PrinterName -PortName $PrinterPortName -DriverName $PrinterDriverModelName
     }
     catch
     {
-        Update-OutputOnExit -ExitCode $ExitWithError -Results "Error adding Printer Port"
+        Update-OutputOnExit -ExitCode $ExitWithError -Results "Error adding $PrinterName"
     }
 }
 else
 {
-    write-host "$PrinterName is aleady exists in the system!"
+    write-host "$PrinterName aleady exists in the system!"
 }
