@@ -1,5 +1,5 @@
 # Datto_RMM
-Welcome to Madhu's Repository of Scripts for [Datto RMM](https://www.datto.com/products/rmm/ "Datto RMM"). I am sharing these scripts AS IS" without any kind of warranty. Please go through the scripts' content before deploying in your environment.
+Welcome to Madhu's Repository of Scripts for [Datto RMM](https://www.datto.com/products/rmm/ "Datto RMM"). I am sharing these scripts "AS IS" without any kind of warranty. Please go through the scripts' content before deploying in your environment.
 
 If you have any question about any of the scripts or you have an idea for a PowerShell based script, please leave a comment.
 
@@ -33,9 +33,8 @@ function Update-OutputOnExit
     exit $ExitCode
 }
 ```
+### Misc
+Collection of Miscellaneous Scripts that are not part of Datto Monitoring or Scripts. For example, [Update-WarrantyDetailsUsingCsv](https://github.com/madhuperera/Datto_RMM/blob/main/Misc/Warranty/Update-WarrantyDetailsUsingCsv.ps1 "Update-WarrantyDetailsUsingCsv") is a PowerShell script that you can use to update Warranty Expiry Dates in Datto RMM using a CSV file. 
 
-## MicrosoftDefenderStatusUpdate
-Monitoring all Defender related services and features.
-
-## MonitoringLocalAdministratorGroup
-Monitoring Local Administrator Group to see if there are any user accounts.
+### Monitoring
+Here, you will find a collection of PowerShell scripts that you can use with a Monitoring Policy in Datto RMM. Deploy these Scripts as a Monitoring Component in your Environment, so you can use them within Monitoring Policies. You can find more information on how to create a Datto RMM Monitor [here](https://rmm.datto.com/help/en/Content/4WEBPORTAL/Policies/MonitoringPolicy.htm "here").
