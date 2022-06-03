@@ -38,3 +38,11 @@ Collection of Miscellaneous Scripts that are not part of Datto Monitoring or Scr
 
 ### Monitoring
 Here, you will find a collection of PowerShell scripts that you can use with a Monitoring Policy in Datto RMM. Deploy these Scripts as a Monitoring Component in your Environment, so you can use them within Monitoring Policies. You can find more information on how to create a Datto RMM Monitor [here](https://rmm.datto.com/help/en/Content/4WEBPORTAL/Policies/MonitoringPolicy.htm "here").
+
+### Script
+This is collection of PowerShell scripts that you can use to carry out certain tasks on Windows Devices. While a monitoring Script can also be used as a Script in Datto, Scripts found here are not suitable to use with monitoring policies. 
+
+## Feedback
+Constructive feedback is always appreciated. I am doing most of these Scripts in my own Personal time, so I will not be able to update these as often as I would have liked to. If you find any issues with the Scripts, please leave a comment and I will try my best to get it sorted and update the Script. If you have an idea for a Script that could be useful for yourself as well as others, you can contact me using any of the Social Media platforms below:
+- [LinkedIn](https://www.linkedin.com/in/madhuperera/ "LinkedIn")
+- [Twitter](https://twitter.com/madhu_perera "Twitter")
