@@ -138,3 +138,5 @@ else
 {
     write-host "$PrinterName aleady exists in the system!"
 }
+
+Update-OutputOnExit -ExitCode $ExitWithNoError -Results "$PrinterName has successfully been added!"
