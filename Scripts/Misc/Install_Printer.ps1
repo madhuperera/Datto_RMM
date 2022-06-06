@@ -53,11 +53,11 @@ function Test-PrinterPortExists
     # IP Address of the Printer
     param
     (
-        [String] $PrinterPortName
+        [String] $PrinterFPortName
     )
     
 
-    if (Get-PrinterPort | Where-Object {$_.Name -like "*$($PrinterPortName)*"})
+    if (Get-PrinterPort | Where-Object {$_.Name -like "*$($PrinterFPortName)*"})
     {
         return $true
     }
@@ -72,10 +72,10 @@ function Test-PrinterExists
     # IP Address of the Printer
     param
     (
-        [String] $PrinterName
+        [String] $PrinterFName
     )    
 
-    if (Get-Printer -Name $PrinterName)
+    if (Get-Printer | Where-Object {$_.Name -like "*$($PrinterFName)*"})
     {
         return $true
     }
