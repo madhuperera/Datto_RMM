@@ -75,7 +75,7 @@ function Test-PrinterExists
         [String] $PrinterFName
     )    
 
-    if (Get-Printer -Name $PrinterFName)
+    if (Get-Printer -Name $PrinterFName -ErrorAction SilentlyContinue)
     {
         return $true
     }
