@@ -6,18 +6,13 @@ function Update-RegistryKey
         [String] $Reg_Key_Name,
         [String] $Reg_Key_Value_Name,
         [String] $Reg_Key_Value_Data,
-        [String] $Reg_Key_Value_Type
+        [ValidateSet("String","ExpandString","Binary","DWord","MultiString","Qword")] $Reg_Key_Value_Type
     )
     [bool] $ExitWithError = $true
     [bool] $ExitWithNoError = $false
 
-    if(Test-Path -Path "$Reg_Key_Parent_Path\$Reg_Key_Name" -PathType Container)
+    if(!(Test-Path -Path "$Reg_Key_Parent_Path\$Reg_Key_Name" -PathType Container))
     {
-        Write-Host "$Reg_Key_Parent_Path\$Reg_Key_Name already exists"
-    }
-    else
-    {
-        Write-Host "Creating $Reg_Key_Parent_Path\$Reg_Key_Name..."
         New-Item -Path $Reg_Key_Parent_Path -Name $Reg_Key_Name -ItemType Conatiner -Force
     }
 
@@ -29,8 +24,9 @@ function Update-RegistryKey
         }
         catch
         {
-            
+            exit $ExitWithError
         }
         
     }
+    exit $ExitWithNoError
 }
