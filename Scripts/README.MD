@@ -10,8 +10,3 @@ Bunch of Datto Scripts you can run on demand or as part of an Action in Monitori
 - [WINGET](https://github.com/madhuperera/Datto_RMM/tree/main/Scripts/WINGET "WINGET")
 - [Windows](https://github.com/madhuperera/Datto_RMM/tree/main/Scripts/Windows "Windows")
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4f6f910fdc5199f4bce1ccdd748a72db3ee70a18
-
