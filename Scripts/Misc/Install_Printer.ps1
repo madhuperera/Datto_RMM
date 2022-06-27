@@ -106,7 +106,7 @@ else
 
 
 # Installing the Printer Port
-if (!(Test-PrinterPortExists -PrinterPortName $PrinterPortName))
+if (!(Test-PrinterPortExists -PrinterFPortName $PrinterPortName))
 {
     try
     {
@@ -123,7 +123,7 @@ else
 }
 
 # Installing the Printer
-if (!(Test-PrinterExists -PrinterName $PrinterName))
+if (!(Test-PrinterExists -PrinterFName $PrinterName))
 {
     try
     {
