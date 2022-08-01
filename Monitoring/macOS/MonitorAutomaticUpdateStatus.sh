@@ -6,7 +6,7 @@ echo "[i] Checking that automatic updates are enabled"
 updates=$(defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist AutomaticCheckEnabled)
 updatescorrect="true"
 
-if [ "$updates" == "$updatescorrect" ]; then
+if [ "$updates" = "$updatescorrect" ]; then
         echo "[YES] Automatic updates are enabled"
         exit 0;
 else 
