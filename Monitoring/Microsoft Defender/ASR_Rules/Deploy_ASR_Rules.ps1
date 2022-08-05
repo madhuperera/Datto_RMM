@@ -14,7 +14,7 @@
 [String] $S_OfficeChildProc_Mode = $ENV:DRMM_S_OfficeChildProc_Mode # Block all Office applications from creating child processes
 [String] $S_WMIEvent_Mode = $ENV:DRMM_S_WMIEvent_Mode # Block persistence through WMI event subscription
 
-[String] $S_ASR_NewExclusions = $ENV:DRMM_S_ASR_NewExclusions # Please provide a list of exclusions separated by comma in this format: "C:\Program Files (x86)\CentraStage\CagService.exe","C:\Program Files (x86)\CentraStage\Gui.exe"
+[String] $S_ASR_NewExclusions = $ENV:DRMM_S_ASR_NewExclusions # Please provide a list of exclusions separated by comma in this format: C:\Program Files (x86)\CentraStage\CagService.exe,C:\Program Files (x86)\CentraStage\Gui.exe
 
 [bool] $ExitWithError = $true
 [bool] $ExitWithNoError = $false
