@@ -14,6 +14,8 @@
 [String] $S_OfficeChildProc_Mode = $ENV:DRMM_S_OfficeChildProc_Mode # Block all Office applications from creating child processes
 [String] $S_WMIEvent_Mode = $ENV:DRMM_S_WMIEvent_Mode # Block persistence through WMI event subscription
 
+[String] $S_ASR_NewExclusions = $ENV:DRMM_S_ASR_NewExclusions # Please provide a list of exclusions separated by comma in this format: "C:\Program Files (x86)\CentraStage\CagService.exe","C:\Program Files (x86)\CentraStage\Gui.exe"
+
 [bool] $ExitWithError = $true
 [bool] $ExitWithNoError = $false
 
@@ -103,6 +105,15 @@ try
     # Block persistence through WMI event subscription
     Add-MpPreference -AttackSurfaceReductionRules_Ids e6db77e5-3df2-4cf1-b95a-636979351e5b -AttackSurfaceReductionRules_Actions $S_WMIEvent_Mode -ErrorAction Stop
 
+    if ($S_ASR_NewExclusions)
+    {
+        $List_Of_ASR_Exclusions = $S_ASR_NewExclusions -split ","
+        foreach ($Exclusion in $List_Of_ASR_Exclusions)
+        {
+            Add-MpPreference -AttackSurfaceReductionOnlyExclusions $Exclusion -ErrorAction Stop
+            Write-Host "Added $($Exclusion) to ASR Exclusions."
+        }
+    }
 }
 catch
 {
