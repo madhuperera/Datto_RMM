@@ -1,0 +1,2 @@
+Get-Printer | Where-Object {$_.Type -eq "Local" -and $_.Name -notlike "*Fax*" -and $_.Name -notlike "*OneNote*" -and $_.Name -notlike "*Microsoft*"} | `
+    Select-Object Name, DriverName, Type, PortName
