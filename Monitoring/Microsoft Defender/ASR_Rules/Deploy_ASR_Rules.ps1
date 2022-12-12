@@ -1,3 +1,5 @@
+# Expected Values are: "AuditMode" | "Enabled"
+
 [String] $S_Prevalence_Mode = $ENV:DRMM_S_Prevalence_Mode # Block executable files from running unless they meet a prevalence, age, or trusted list criteria
 [String] $S_OfficeChild_Mode = $ENV:DRMM_S_OfficeChild_Mode # Block Office communication applications from creating child processes
 [String] $S_OfficeExec_Mode = $ENV:DRMM_S_OfficeExec_Mode # Block Office applications from creating executable content
