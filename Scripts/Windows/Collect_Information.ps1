@@ -1,7 +1,7 @@
 # Author: Madhu Perera
-# Reference: 
+# Reference: https://github.com/madhuperera/Datto_RMM/blob/main/Scripts/Windows/Collect_Information.ps1
 
-
+$ReportFolder = "C:\Reports_"
 
 # --------------- FUNCTIONS ------------------
 function Get-DeviceDetails
@@ -38,3 +38,9 @@ function Update-OutputOnExit
 
 # ----------------- MAIN -----------------------------
 
+if (!(Test-Path -Path $ReportFolder -PathType Container))
+{
+    New-Item -Path $ReportFolder -Type Container -ErrorAction SilentlyContinue
+}
+
+Start-Transcript -Path "$ReportFolder\"
