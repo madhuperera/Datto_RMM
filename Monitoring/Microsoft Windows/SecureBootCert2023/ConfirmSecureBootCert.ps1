@@ -155,48 +155,41 @@ function Confirm-SecureBootCert2023 {
 		
 		# Get KEK certificates
 		$KEKcerts = Get-SecureBootCertSubjects -Database kek
-		$KEKVersion = $null
+		$KEKVersion = "unknown"
 		
 		if ($KEKcerts) {
 			foreach ($cert in $KEKcerts) {
 				$subject = $cert.SignatureSubject
-				if ($subject -match 'Microsoft Corporation KEK CA (\d{4})') {
-					$KEKVersion = $matches[1]
+				if ($subject -like '*Microsoft Corporation KEK 2K CA 2023*') {
+					$KEKVersion = "2023"
 					break
 				}
 			}
-		}
-		
-		if (-not $KEKVersion) {
-			$KEKVersion = "unknown"
 		}
 		$outputs.Add("SecureBootKEK = $KEKVersion")
 		
 		# Get DB certificates
 		$DBcerts = Get-SecureBootCertSubjects -Database db
-		$DBVersions = @()
+		$DBVersion = "unknown"
+		$DBHas2023 = $false
 		
 		if ($DBcerts) {
 			foreach ($cert in $DBcerts) {
 				$subject = $cert.SignatureSubject
-				if ($subject -match 'Microsoft Corporation UEFI CA (\d{4})') {
-					$DBVersions += [int]$matches[1]
-				}
-				elseif ($subject -match 'Microsoft Windows Production PCA (\d{4})') {
-					$DBVersions += [int]$matches[1]
+				if (
+					$subject -like '*Windows UEFI CA 2023*' -or
+					$subject -like '*Microsoft UEFI CA 2023*' -or
+					$subject -like '*Microsoft Option ROM UEFI CA 2023*'
+				) {
+					$DBHas2023 = $true
+					$DBVersion = "2023"
+					break
 				}
 			}
 		}
-		
-		if ($DBVersions.Count -gt 0) {
-			$DBVersion = ($DBVersions | Measure-Object -Minimum).Minimum.ToString()
-		} else {
-			$DBVersion = "unknown"
-		}
 		$outputs.Add("SecureBootDB = $DBVersion")
 		
-		# Check if DB has Windows UEFI CA 2023
-		$DBHas2023 = [bool] ($DBcerts | Where-Object { $_.SignatureSubject -match 'Windows UEFI CA 2023' })
+		# Check if DB has one of the new 2023 DB certificates
 		$outputs.Add("SecureBootDBHas2023 = $($DBHas2023.ToString().ToLower())")
 		
 		# Validation: Check if all values meet compliance requirements
